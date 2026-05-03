@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Leaderboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    /* RESET */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0b1220;
+      display: flex;
+      justify-content: center;
+      color: white; /* 🔥 FORCE WHITE TEXT */
+    }
+
+    /* MAIN CARD */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #0f172a, #020617);
+      padding: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: white;
+    }
+
+    /* TOP LEADERS */
+    .top {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .player {
+      text-align: center;
+      position: relative;
+    }
+
+    .avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid gold;
+      animation: glow 2s infinite;
+    }
+
+    .crown {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
+      50% { box-shadow: 0 0 20px rgba(255,215,0,0.9); }
+      100% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
+    }
+
+    .name {
+      font-size: 13px;
+      margin-top: 4px;
+      color: white;
+    }
+
+    .top-score {
+      font-size: 15px;
+      font-weight: bold;
+      color: #a3e635;
+    }
+
+    /* LIST */
+    .list {
+      background: #111827;
+      border-radius: 14px;
+      padding: 8px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      background: #1f2937;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rank {
+      width: 20px;
+      text-align: center;
+      font-size: 12px;
+      opacity: 0.7;
+      font-weight: bold;
+      color: white;
+    }
+
+    .small-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* SCORE BADGE */
+    .score {
+      min-width: 36px;
+      height: 30px;
+      padding: 0 8px;
+      border-radius: 10px;
+      background: #0f172a;
+      border: 1px solid rgba(163,230,53,0.3);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 14px;
+      font-weight: bold;
+      color: #a3e635;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Leaderboard</h2>
+
+  <div class="top" id="top"></div>
+  <div class="list" id="list"></div>
+
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbw5bdTrnLF5mtzqIpElHnd-wvQDf_Rc-if73UsDWLnNZYPqsU9I367uyKUhbejZ8Wd3aA/exec";
+
+async function loadData() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+
+  data.sort((a,b)=>b.score-a.score);
+
+  const topContainer = document.getElementById("top");
+  const list = document.getElementById("list");
+
+  topContainer.innerHTML = "";
+  list.innerHTML = "";
+
+  // 🔥 tie logic
+  const topScore = data[0]?.score;
+  const topPlayers = data.filter(p => p.score === topScore);
+
+  // TOP
+  topPlayers.forEach(player => {
+    const div = document.createElement("div");
+    div.className = "player";
+
+    div.innerHTML = `
+      <div class="crown">👑</div>
+      <img class="avatar" src="${player.photo}">
+      <div class="name">${player.name}</div>
+      <div class="top-score">${player.score}</div>
+    `;
+
+    topContainer.appendChild(div);
+  });
+
+  // LIST
+  const rest = data.slice(topPlayers.length);
+
+  rest.forEach((item,index)=>{
+    const row = document.createElement("div");
+    row.className = "row";
+
+    row.innerHTML=`
+      <div class="left">
+        <div class="rank">${index + topPlayers.length + 1}</div>
+        <img class="small-avatar" src="${item.photo}">
+        <div class="name">${item.name}</div>
+      </div>
+      <div class="score">${item.score}</div>
+    `;
+
+    list.appendChild(row);
+  });
+}
+
+setInterval(loadData,5000);
+loadData();
+</script>
+
+</body>
+</html>
