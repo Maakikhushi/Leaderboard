@@ -1,146 +1,132 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Leaderboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #0b1220;
-      display: flex;
-      justify-content: center;
-      color: white;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, sans-serif;
+  background: #0b1220;
+  display: flex;
+  justify-content: center;
+  color: white;
+}
 
-    .container {
-      width: 100%;
-      max-width: 420px;
-      min-height: 100vh;
-      background: linear-gradient(180deg, #0f172a, #020617);
-      padding: 10px;
-    }
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px;
+}
 
-    h2 {
-      text-align: center;
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
+h2 {
+  text-align: center;
+  font-size: 16px;
+}
 
-    /* TOP */
-    .top {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
+.top {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
 
-    .player {
-      text-align: center;
-      position: relative;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.5s ease;
-    }
+.player {
+  text-align: center;
+  position: relative;
+}
 
-    .avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid gold;
-      animation: glow 2s infinite;
-    }
+.avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid gold;
+  animation: glow 2s infinite;
+}
 
-    .crown {
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 16px;
-    }
+.crown {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  animation: crownJump 1s ease;
+}
 
-    @keyframes glow {
-      0% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
-      50% { box-shadow: 0 0 20px rgba(255,215,0,0.9); }
-      100% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
-    }
+@keyframes crownJump {
+  0% { transform: translate(-50%, -10px); }
+  50% { transform: translate(-50%, -20px); }
+  100% { transform: translate(-50%, -10px); }
+}
 
-    .name {
-      font-size: 13px;
-      margin-top: 4px;
-    }
+@keyframes glow {
+  0% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
+  50% { box-shadow: 0 0 18px rgba(255,215,0,0.9); }
+  100% { box-shadow: 0 0 8px rgba(255,215,0,0.4); }
+}
 
-    .top-score {
-      font-size: 15px;
-      font-weight: bold;
-      color: #a3e635;
-    }
+.list {
+  background: #111827;
+  border-radius: 12px;
+  padding: 6px;
+}
 
-    /* LIST */
-    .list {
-      background: #111827;
-      border-radius: 14px;
-      padding: 8px;
-    }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  background: #1f2937;
+  transition: transform 0.4s ease, background 0.4s ease;
+}
 
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 10px;
-      border-radius: 12px;
-      margin-bottom: 6px;
-      background: #1f2937;
+.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-      opacity: 0;
-      transform: translateY(20px);
-      transition: transform 0.4s ease, opacity 0.4s ease;
-    }
+.rank {
+  width: 20px;
+  font-size: 12px;
+}
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+.small-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 
-    .rank {
-      width: 20px;
-      text-align: center;
-      font-size: 12px;
-      opacity: 0.7;
-      font-weight: bold;
-    }
+.score {
+  background: #0f172a;
+  padding: 4px 10px;
+  border-radius: 8px;
+  color: #a3e635;
+  font-weight: bold;
+}
 
-    .small-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+/* 🔥 movement feedback */
+.move-up {
+  background: rgba(16,185,129,0.25);
+}
 
-    .score {
-      min-width: 36px;
-      height: 30px;
-      padding: 0 8px;
-      border-radius: 10px;
-      background: #0f172a;
-      border: 1px solid rgba(163,230,53,0.3);
+.move-down {
+  background: rgba(239,68,68,0.25);
+}
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+/* 🎯 rank change badge */
+.delta {
+  font-size: 10px;
+  margin-left: 4px;
+}
 
-      font-size: 14px;
-      font-weight: bold;
-      color: #a3e635;
-    }
+.up { color: #22c55e; }
+.down { color: #ef4444; }
 
-    .move-up { background: rgba(16,185,129,0.2); }
-    .move-down { background: rgba(239,68,68,0.2); }
-
-  </style>
+</style>
 </head>
 
 <body>
@@ -154,6 +140,7 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbw5bdTrnLF5mtzqIpElHnd-wvQDf_Rc-if73UsDWLnNZYPqsU9I367uyKUhbejZ8Wd3aA/exec";
 
+let rowMap = {};
 let previousPositions = {};
 
 async function loadData() {
@@ -162,70 +149,100 @@ async function loadData() {
 
   data.sort((a,b)=>b.score-a.score);
 
-  const topContainer = document.getElementById("top");
   const list = document.getElementById("list");
+  const topContainer = document.getElementById("top");
+
+  // ---------- TOP ----------
+  const topScore = data[0]?.score;
+  const leaders = data.filter(p => p.score === topScore);
 
   topContainer.innerHTML = "";
-  list.innerHTML = "";
 
-  const topScore = data[0]?.score;
-  const topPlayers = data.filter(p => p.score === topScore);
-
-  // TOP PLAYERS
-  topPlayers.forEach(player => {
+  leaders.forEach(p => {
     const div = document.createElement("div");
     div.className = "player";
-
     div.innerHTML = `
       <div class="crown">👑</div>
-      <img class="avatar" src="${player.photo}">
-      <div class="name">${player.name}</div>
-      <div class="top-score">${player.score}</div>
+      <img class="avatar" src="${p.photo}">
+      <div>${p.name}</div>
+      <div style="color:#a3e635;font-weight:bold">${p.score}</div>
     `;
-
     topContainer.appendChild(div);
   });
 
-  // Animate top
-  setTimeout(() => {
-    document.querySelectorAll(".player").forEach((p, i) => {
-      setTimeout(() => {
-        p.style.opacity = "1";
-        p.style.transform = "translateY(0)";
-      }, i * 100);
-    });
-  }, 100);
-
-  const rest = data.slice(topPlayers.length);
-
-  rest.forEach((item,index)=>{
-    const row = document.createElement("div");
-    row.className = "row";
-
-    row.innerHTML=`
-      <div class="left">
-        <div class="rank">${index + topPlayers.length + 1}</div>
-        <img class="small-avatar" src="${item.photo}">
-        <div class="name">${item.name}</div>
-      </div>
-      <div class="score">${item.score}</div>
-    `;
-
-    list.appendChild(row);
+  // ---------- FLIP START ----------
+  const first = {};
+  Object.keys(rowMap).forEach(name => {
+    first[name] = rowMap[name].getBoundingClientRect().top;
   });
 
-  // ENTRY ANIMATION (STACK EFFECT)
-  setTimeout(() => {
-    document.querySelectorAll(".row").forEach((row, i) => {
-      setTimeout(() => {
-        row.style.opacity = "1";
-        row.style.transform = "translateY(0)";
-      }, i * 50);
-    });
-  }, 100);
+  // ---------- RENDER ----------
+  data.forEach((item, index) => {
+
+    let row = rowMap[item.name];
+
+    if(!row){
+      row = document.createElement("div");
+      row.className = "row";
+
+      row.innerHTML = `
+        <div class="left">
+          <div class="rank"></div>
+          <img class="small-avatar">
+          <div class="name"></div>
+        </div>
+        <div class="score"></div>
+      `;
+
+      rowMap[item.name] = row;
+    }
+
+    const oldIndex = previousPositions[item.name];
+    const newIndex = index;
+
+    const delta = oldIndex !== undefined ? oldIndex - newIndex : 0;
+
+    row.querySelector(".rank").innerText = index + 1;
+    row.querySelector(".name").innerHTML = `
+      ${item.name}
+      ${delta > 0 ? `<span class="delta up">+${delta}</span>` : ""}
+      ${delta < 0 ? `<span class="delta down">${delta}</span>` : ""}
+    `;
+    row.querySelector(".score").innerText = item.score;
+    row.querySelector(".small-avatar").src = item.photo;
+
+    // movement color
+    row.classList.remove("move-up","move-down");
+    if(delta > 0) row.classList.add("move-up");
+    if(delta < 0) row.classList.add("move-down");
+
+    setTimeout(()=>row.classList.remove("move-up","move-down"),600);
+
+    list.appendChild(row);
+    previousPositions[item.name] = newIndex;
+  });
+
+  // ---------- FLIP ANIMATION ----------
+  Object.keys(rowMap).forEach(name => {
+    const row = rowMap[name];
+
+    const last = row.getBoundingClientRect().top;
+    const prev = first[name];
+
+    if(prev !== undefined){
+      const diff = prev - last;
+
+      if(diff){
+        row.style.transform = `translateY(${diff}px)`;
+        requestAnimationFrame(()=>{
+          row.style.transform = "";
+        });
+      }
+    }
+  });
 }
 
-setInterval(loadData,5000);
+setInterval(loadData, 4000);
 loadData();
 </script>
 
