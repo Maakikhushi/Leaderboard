@@ -5,21 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    /* RESET */
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #0b1220;
       display: flex;
       justify-content: center;
-      color: white; /* 🔥 FORCE WHITE TEXT */
+      color: white;
     }
 
-    /* MAIN CARD */
     .container {
       width: 100%;
       max-width: 420px;
@@ -32,10 +26,9 @@
       text-align: center;
       font-size: 16px;
       margin-bottom: 12px;
-      color: white;
     }
 
-    /* TOP LEADERS */
+    /* TOP */
     .top {
       display: flex;
       justify-content: center;
@@ -46,6 +39,9 @@
     .player {
       text-align: center;
       position: relative;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.5s ease;
     }
 
     .avatar {
@@ -74,7 +70,6 @@
     .name {
       font-size: 13px;
       margin-top: 4px;
-      color: white;
     }
 
     .top-score {
@@ -98,6 +93,10 @@
       border-radius: 12px;
       margin-bottom: 6px;
       background: #1f2937;
+
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
     .left {
@@ -112,7 +111,6 @@
       font-size: 12px;
       opacity: 0.7;
       font-weight: bold;
-      color: white;
     }
 
     .small-avatar {
@@ -122,7 +120,6 @@
       object-fit: cover;
     }
 
-    /* SCORE BADGE */
     .score {
       min-width: 36px;
       height: 30px;
@@ -140,22 +137,24 @@
       color: #a3e635;
     }
 
+    .move-up { background: rgba(16,185,129,0.2); }
+    .move-down { background: rgba(239,68,68,0.2); }
+
   </style>
 </head>
 
 <body>
 
 <div class="container">
-
-  <h2>Leaderboard</h2>
-
+  <h2>🏆 Leaderboard</h2>
   <div class="top" id="top"></div>
   <div class="list" id="list"></div>
-
 </div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbw5bdTrnLF5mtzqIpElHnd-wvQDf_Rc-if73UsDWLnNZYPqsU9I367uyKUhbejZ8Wd3aA/exec";
+
+let previousPositions = {};
 
 async function loadData() {
   const res = await fetch(API_URL);
@@ -169,11 +168,10 @@ async function loadData() {
   topContainer.innerHTML = "";
   list.innerHTML = "";
 
-  // 🔥 tie logic
   const topScore = data[0]?.score;
   const topPlayers = data.filter(p => p.score === topScore);
 
-  // TOP
+  // TOP PLAYERS
   topPlayers.forEach(player => {
     const div = document.createElement("div");
     div.className = "player";
@@ -188,7 +186,16 @@ async function loadData() {
     topContainer.appendChild(div);
   });
 
-  // LIST
+  // Animate top
+  setTimeout(() => {
+    document.querySelectorAll(".player").forEach((p, i) => {
+      setTimeout(() => {
+        p.style.opacity = "1";
+        p.style.transform = "translateY(0)";
+      }, i * 100);
+    });
+  }, 100);
+
   const rest = data.slice(topPlayers.length);
 
   rest.forEach((item,index)=>{
@@ -206,6 +213,16 @@ async function loadData() {
 
     list.appendChild(row);
   });
+
+  // ENTRY ANIMATION (STACK EFFECT)
+  setTimeout(() => {
+    document.querySelectorAll(".row").forEach((row, i) => {
+      setTimeout(() => {
+        row.style.opacity = "1";
+        row.style.transform = "translateY(0)";
+      }, i * 50);
+    });
+  }, 100);
 }
 
 setInterval(loadData,5000);
