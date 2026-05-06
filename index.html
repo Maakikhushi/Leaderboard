@@ -249,7 +249,7 @@ body {
 const API_URL = "https://script.google.com/macros/s/AKfycbwb821OJkxRoRC4fkecgU0VU1dMP3l3wZ51XqyT5tl_E__SIvORpzrVyO34u-Mfhh4L/exec";
 
 async function loadData() {
-  const res = await fetch(API_URL);
+  const res = await fetch(API_URL + "?t=" + Date.now());
   const data = await res.json();
 
   data.sort((a,b)=>b.score-a.score);
