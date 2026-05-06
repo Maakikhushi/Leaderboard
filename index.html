@@ -285,9 +285,11 @@ async function loadData() {
   const colors = ["blue","green","light","soft"];
 
   rest.forEach((p, i)=>{
-    if(i > 0 && p.score !== rest[i-1].score){
-      rank = i + toppers.length + 1;
-    }
+
+  // dense ranking
+  if(i > 0 && p.score !== rest[i-1].score){
+    rank++;
+  }
 
     const row = document.createElement("div");
     row.className = "row";
