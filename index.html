@@ -37,9 +37,9 @@ body {
     color: var(--text);
 }
 
-/* =========================================
+/* ==================================================
    HEADER
-========================================= */
+================================================== */
 
 .header {
     background:
@@ -121,9 +121,9 @@ body {
     box-shadow: 0 0 10px #63e43d;
 }
 
-/* =========================================
+/* ==================================================
    MAIN
-========================================= */
+================================================== */
 
 .container {
     width: min(1200px, calc(100% - 28px));
@@ -132,9 +132,9 @@ body {
     z-index: 5;
 }
 
-/* =========================================
+/* ==================================================
    SUMMARY
-========================================= */
+================================================== */
 
 .summary {
     background: white;
@@ -173,9 +173,9 @@ body {
     color: var(--uf-green-dark);
 }
 
-/* =========================================
-   CURRENT LEADER
-========================================= */
+/* ==================================================
+   LEADER
+================================================== */
 
 .leader-card {
     background:
@@ -260,9 +260,9 @@ body {
     letter-spacing: .8px;
 }
 
-/* =========================================
+/* ==================================================
    CONTROLS
-========================================= */
+================================================== */
 
 .controls {
     background: white;
@@ -315,9 +315,9 @@ body {
     border-color: var(--uf-blue);
 }
 
-/* =========================================
+/* ==================================================
    LEADERBOARD
-========================================= */
+================================================== */
 
 .board {
     background: white;
@@ -353,14 +353,14 @@ body {
     text-align: right;
 }
 
-/* =========================================
+/* ==================================================
    TABLE
-========================================= */
+================================================== */
 
 .table-head,
 .player-row {
     display: grid;
-    grid-template-columns: 70px 1fr 130px 180px 160px;
+    grid-template-columns: 70px 1fr 130px 180px 180px;
     align-items: center;
     gap: 15px;
 }
@@ -457,6 +457,7 @@ body {
 .eligibility {
     font-size: 11px;
     font-weight: 800;
+    margin-top: 4px;
 }
 
 .eligible {
@@ -497,9 +498,9 @@ body {
     color: #96623a;
 }
 
-/* =========================================
+/* ==================================================
    LOADING / ERROR
-========================================= */
+================================================== */
 
 .message {
     padding: 50px 20px;
@@ -523,9 +524,9 @@ body {
     }
 }
 
-/* =========================================
+/* ==================================================
    FOOTER
-========================================= */
+================================================== */
 
 .footer {
     text-align: center;
@@ -534,9 +535,9 @@ body {
     font-size: 11px;
 }
 
-/* =========================================
+/* ==================================================
    MOBILE
-========================================= */
+================================================== */
 
 @media (max-width: 800px) {
 
@@ -562,10 +563,6 @@ body {
         grid-template-columns: 42px 1fr auto;
         gap: 10px;
         padding: 14px 13px;
-    }
-
-    .player-row > .mobile-zone {
-        display: block;
     }
 
     .desktop-zone {
@@ -602,12 +599,6 @@ body {
 
 }
 
-@media (min-width: 801px) {
-    .mobile-zone {
-        display: none;
-    }
-}
-
 </style>
 </head>
 
@@ -616,12 +607,15 @@ body {
 <header class="header">
 
     <div class="logo-wrap">
+
+        <!-- Replace 1placeholder with your actual Market Marathon logo Drive ID -->
         <img
             class="logo"
-            src="https://drive.google.com/thumbnail?id=1placeholder"
+            src="https://drive.google.com/thumbnail?id=1placeholder&sz=w1000"
             alt="Market Marathon"
             onerror="this.style.display='none'"
         >
+
     </div>
 
     <div class="campaign-date">
@@ -638,9 +632,15 @@ body {
 
 <main class="container">
 
+
+    <!-- =========================================
+         SUMMARY
+    ========================================== -->
+
     <section class="summary">
 
         <div class="summary-card">
+
             <div class="summary-label">
                 Participants
             </div>
@@ -651,10 +651,12 @@ body {
             >
                 —
             </div>
+
         </div>
 
 
         <div class="summary-card">
+
             <div class="summary-label">
                 ₹2L+ Eligible
             </div>
@@ -665,12 +667,14 @@ body {
             >
                 —
             </div>
+
         </div>
 
 
         <div class="summary-card">
+
             <div class="summary-label">
-                Current Highest Collection
+                Highest Collection
             </div>
 
             <div
@@ -679,15 +683,17 @@ body {
             >
                 —
             </div>
+
         </div>
 
     </section>
 
 
-    <section
-        class="leader-card"
-        id="leaderCard"
-    >
+    <!-- =========================================
+         CURRENT LEADER
+    ========================================== -->
+
+    <section class="leader-card">
 
         <div class="leader-inner">
 
@@ -695,11 +701,13 @@ body {
                 id="leaderPhotoContainer"
             ></div>
 
+
             <div class="leader-content">
 
                 <div class="leader-eyebrow">
                     🏆 CURRENT LEADER
                 </div>
+
 
                 <div
                     class="leader-name"
@@ -708,11 +716,13 @@ body {
                     Loading...
                 </div>
 
+
                 <div
                     class="leader-zone"
                     id="leaderZone"
                 >
                 </div>
+
 
                 <div
                     class="leader-collection"
@@ -720,6 +730,7 @@ body {
                 >
                     —
                 </div>
+
 
                 <div
                     class="leader-status"
@@ -734,6 +745,10 @@ body {
     </section>
 
 
+    <!-- =========================================
+         SEARCH / ZONE FILTER
+    ========================================== -->
+
     <section class="controls">
 
         <input
@@ -743,14 +758,18 @@ body {
             placeholder="Search salesperson..."
         >
 
+
         <div
             class="zone-buttons"
             id="zoneButtons"
-        >
-        </div>
+        ></div>
 
     </section>
 
+
+    <!-- =========================================
+         LEADERBOARD
+    ========================================== -->
 
     <section class="board">
 
@@ -763,10 +782,11 @@ body {
                 </div>
 
                 <div class="board-subtitle">
-                    Highest collection leads the race
+                    ₹2L+ unlocks eligibility • Highest collection wins
                 </div>
 
             </div>
+
 
             <div
                 class="refresh-text"
@@ -797,15 +817,14 @@ body {
             </div>
 
             <div>
-                Current Position
+                Reward Position
             </div>
 
         </div>
 
 
-        <div
-            id="leaderboard"
-        >
+        <div id="leaderboard">
+
             <div class="message">
 
                 <div class="spinner"></div>
@@ -813,6 +832,7 @@ body {
                 Loading leaderboard...
 
             </div>
+
         </div>
 
     </section>
@@ -822,7 +842,7 @@ body {
 
 <footer class="footer">
 
-    Market Marathon 2026 • Ultrafresh
+    MARKET MARATHON 2026 • ULTRAFRESH
 
 </footer>
 
@@ -830,7 +850,7 @@ body {
 <script>
 
 /* ==================================================
-   MARKET MARATHON API
+   API
 ================================================== */
 
 const API_URL =
@@ -871,22 +891,22 @@ function formatLakhs(value) {
     value =
         Number(value) || 0;
 
+
     if (value >= 100000) {
 
         return (
             "₹" +
             (value / 100000)
-                .toFixed(
-                    value >= 1000000
-                        ? 2
-                        : 2
-                ) +
+                .toFixed(2) +
             " L"
         );
 
     }
 
-    return formatCurrency(value);
+
+    return formatCurrency(
+        value
+    );
 
 }
 
@@ -903,9 +923,11 @@ function getInitials(name) {
             .split(/\s+/)
             .filter(Boolean);
 
+
     if (!words.length) {
         return "?";
     }
+
 
     if (words.length === 1) {
 
@@ -915,57 +937,11 @@ function getInitials(name) {
 
     }
 
+
     return (
         words[0][0] +
         words[words.length - 1][0]
     ).toUpperCase();
-
-}
-
-
-/* ==================================================
-   PHOTO HTML
-================================================== */
-
-function getPhotoHTML(
-    person,
-    large = false
-) {
-
-    const sizeClass =
-        large
-            ? "leader-photo"
-            : "player-photo";
-
-
-    if (
-        person.photo &&
-        person.photoStatus !== "◻️ No Photo"
-    ) {
-
-        return `
-            <img
-                class="${sizeClass}"
-                src="${person.photo}"
-                alt="${escapeHTML(person.name)}"
-                loading="lazy"
-                onerror="this.outerHTML =
-                    '<div class=&quot;${sizeClass} initial-avatar&quot;>
-                    ${getInitials(person.name)}
-                    </div>'"
-            >
-        `;
-
-    }
-
-
-    return `
-        <div
-            class="${sizeClass} initial-avatar"
-        >
-            ${getInitials(person.name)}
-        </div>
-    `;
 
 }
 
@@ -1002,53 +978,115 @@ function escapeHTML(value) {
 
 
 /* ==================================================
-   REWARD BADGE
+   PHOTO
 ================================================== */
 
-function getRewardBadge(person) {
+function getPhotoHTML(
+    person,
+    large = false
+) {
 
-    if (!person.eligible) {
-
-        return `
-            <span class="reward-badge reward-not">
-                🔒 Not Eligible
-            </span>
-        `;
-
-    }
+    const sizeClass =
+        large
+            ? "leader-photo"
+            : "player-photo";
 
 
     if (
-        person.rewardStatus ===
-        "CURRENTLY TOP 5"
+        person.photo &&
+        person.photoStatus !==
+        "◻️ No Photo"
     ) {
 
         return `
-            <span class="reward-badge reward-top5">
-                🏆 Currently Top 5
-            </span>
-        `;
-
-    }
-
-
-    if (
-        person.rewardStatus ===
-        "CURRENTLY TOP 15"
-    ) {
-
-        return `
-            <span class="reward-badge reward-top15">
-                🎯 Currently Top 15
-            </span>
+            <img
+                class="${sizeClass}"
+                src="${person.photo}"
+                alt="${escapeHTML(person.name)}"
+                loading="lazy"
+                onerror="this.outerHTML =
+                    '<div class=&quot;${sizeClass} initial-avatar&quot;>${getInitials(person.name)}</div>'"
+            >
         `;
 
     }
 
 
     return `
+        <div
+            class="${sizeClass} initial-avatar"
+        >
+            ${getInitials(person.name)}
+        </div>
+    `;
+
+}
+
+
+/* ==================================================
+   REWARD POSITION
+================================================== */
+
+function getRewardBadge(person) {
+
+    /*
+     * Below ₹2L
+     */
+
+    if (!person.eligible) {
+
+        return `
+            <span class="reward-badge reward-not">
+                🔒 ₹2L TO UNLOCK
+            </span>
+        `;
+
+    }
+
+
+    /*
+     * Eligible Rank 1-5
+     */
+
+    if (
+        Number(person.eligibleRank) >= 1 &&
+        Number(person.eligibleRank) <= 5
+    ) {
+
+        return `
+            <span class="reward-badge reward-top5">
+                🏆 PROJECTED TOP 5 • ₹2,500
+            </span>
+        `;
+
+    }
+
+
+    /*
+     * Eligible Rank 6-15
+     */
+
+    if (
+        Number(person.eligibleRank) >= 6 &&
+        Number(person.eligibleRank) <= 15
+    ) {
+
+        return `
+            <span class="reward-badge reward-top15">
+                🎯 PROJECTED TOP 15 • ₹1,200
+            </span>
+        `;
+
+    }
+
+
+    /*
+     * Eligible but outside Top 15
+     */
+
+    return `
         <span class="reward-badge reward-outside">
-            Eligible • Outside Top 15
+            ELIGIBLE • OUTSIDE TOP 15
         </span>
     `;
 
@@ -1096,14 +1134,43 @@ async function loadData() {
         }
 
 
+        /*
+         * API already provides ranking.
+         * We sort again by collection
+         * for safety.
+         */
+
         allData =
             data.sort(
                 (
                     a,
                     b
-                ) =>
-                    Number(b.collection || 0) -
-                    Number(a.collection || 0)
+                ) => {
+
+                    const collectionDifference =
+                        Number(
+                            b.collection || 0
+                        ) -
+                        Number(
+                            a.collection || 0
+                        );
+
+
+                    if (
+                        collectionDifference !== 0
+                    ) {
+
+                        return collectionDifference;
+
+                    }
+
+
+                    return (
+                        Number(a.rank || 0) -
+                        Number(b.rank || 0)
+                    );
+
+                }
             );
 
 
@@ -1114,6 +1181,7 @@ async function loadData() {
         buildZoneButtons();
 
         renderLeaderboard();
+
 
         document.getElementById(
             "refreshText"
@@ -1219,6 +1287,12 @@ function renderLeader() {
 
     if (!leader) {
 
+        document.getElementById(
+            "leaderName"
+        ).textContent =
+            "No data yet";
+
+
         return;
 
     }
@@ -1257,18 +1331,59 @@ function renderLeader() {
         );
 
 
-    document.getElementById(
-        "leaderStatus"
-    ).textContent =
+    if (
         leader.eligible
-            ? "🟢 ₹2L+ ELIGIBLE"
-            : "🔒 ₹2L REQUIRED";
+    ) {
+
+        if (
+            Number(
+                leader.eligibleRank
+            ) <= 5
+        ) {
+
+            document.getElementById(
+                "leaderStatus"
+            ).textContent =
+                "🏆 PROJECTED TOP 5 • ₹2,500";
+
+        }
+
+        else if (
+            Number(
+                leader.eligibleRank
+            ) <= 15
+        ) {
+
+            document.getElementById(
+                "leaderStatus"
+            ).textContent =
+                "🎯 PROJECTED TOP 15 • ₹1,200";
+
+        }
+
+        else {
+
+            document.getElementById(
+                "leaderStatus"
+            ).textContent =
+                "🟢 ₹2L+ ELIGIBLE";
+
+        }
+
+    } else {
+
+        document.getElementById(
+            "leaderStatus"
+        ).textContent =
+            "🔒 ₹2L REQUIRED";
+
+    }
 
 }
 
 
 /* ==================================================
-   ZONE FILTERS
+   ZONE FILTER
 ================================================== */
 
 function buildZoneButtons() {
@@ -1319,6 +1434,7 @@ function buildZoneButtons() {
             selectedZone =
                 "ALL";
 
+
             buildZoneButtons();
 
             renderLeaderboard();
@@ -1359,6 +1475,7 @@ function buildZoneButtons() {
                     selectedZone =
                         zone;
 
+
                     buildZoneButtons();
 
                     renderLeaderboard();
@@ -1397,7 +1514,7 @@ function renderLeaderboard() {
         .trim();
 
 
-    let filtered =
+    const filtered =
         allData.filter(
             person => {
 
@@ -1428,7 +1545,9 @@ function renderLeaderboard() {
         );
 
 
-    if (!filtered.length) {
+    if (
+        !filtered.length
+    ) {
 
         container.innerHTML = `
 
@@ -1437,6 +1556,7 @@ function renderLeaderboard() {
             </div>
 
         `;
+
 
         return;
 
@@ -1466,6 +1586,7 @@ function createPlayerRow(
 
     let rankClass = "";
 
+
     if (
         Number(person.rank) === 1
     ) {
@@ -1473,14 +1594,18 @@ function createPlayerRow(
         rankClass =
             "top1";
 
-    } else if (
+    }
+
+    else if (
         Number(person.rank) === 2
     ) {
 
         rankClass =
             "top2";
 
-    } else if (
+    }
+
+    else if (
         Number(person.rank) === 3
     ) {
 
@@ -1510,18 +1635,18 @@ function createPlayerRow(
     ) {
 
         eligibilityText =
-            `<span class="eligibility eligible">
-                ✓ ₹2L+ Eligible
-             </span>`;
+            `<div class="eligibility eligible">
+                ✓ ₹2L+ ELIGIBLE
+             </div>`;
 
     } else {
 
         eligibilityText =
-            `<span class="eligibility not-eligible">
+            `<div class="eligibility not-eligible">
                 ₹${formatNumber(
                     amountNeeded
-                )} more to unlock
-             </span>`;
+                )} to unlock
+             </div>`;
 
     }
 
@@ -1579,9 +1704,7 @@ function createPlayerRow(
                     )}
                 </div>
 
-                <div class="mobile-zone">
-                    ${eligibilityText}
-                </div>
+                ${eligibilityText}
 
             </div>
 
