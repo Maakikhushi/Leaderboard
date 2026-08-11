@@ -1,300 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maa Ki Khushi</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Oleo+Script&display=swap" rel="stylesheet">
+<title>Market Marathon 2026 | Live Leaderboard</title>
 
 <style>
 
-/* ===== GLOBAL ===== */
-
-body{
-  margin:0;
-  background:#f4f4f4;
-  font-family:-apple-system,sans-serif;
-  display:flex;
-  justify-content:center;
+:root {
+    --uf-blue: #1d9ad6;
+    --uf-blue-dark: #0878b5;
+    --uf-green: #90c03e;
+    --uf-green-dark: #609c20;
+    --dark: #071522;
+    --dark-2: #0d2233;
+    --white: #ffffff;
+    --light: #f3f8fb;
+    --text: #17232d;
+    --muted: #71808c;
+    --border: #dce7ed;
+    --gold: #f5b82e;
 }
 
-.container{
-  width:100%;
-  max-width:430px;
-  padding:16px;
+* {
+    box-sizing: border-box;
 }
 
-/* ===== TITLE ===== */
-
-.title{
-  font-family:'Oleo Script',cursive;
-  font-size:44px;
-  text-align:center;
-  margin:0;
-  line-height:1;
-
-  background:linear-gradient(90deg,#2563eb,#22c55e);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 15% 0%, rgba(29,154,214,.18), transparent 30%),
+        radial-gradient(circle at 85% 0%, rgba(144,192,62,.16), transparent 30%),
+        #f3f7fa;
+    color: var(--text);
 }
 
-.subtitle{
-  text-align:center;
-  color:#6b7280;
-  font-size:18px;
-  margin-top:4px;
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    background:
+        linear-gradient(135deg, #061521 0%, #0b2638 55%, #073e58 100%);
+    color: white;
+    padding: 28px 20px 42px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
-/* ===== TABS ===== */
-
-.tabs{
-  display:flex;
-  gap:8px;
-  margin:18px 0;
+.header::before {
+    content: "";
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(29,154,214,.12);
+    top: -300px;
+    left: -150px;
 }
 
-.tab-btn{
-  flex:1;
-  border:none;
-  border-radius:30px;
-  background:white;
-  padding:11px;
-  font-size:14px;
-  font-weight:700;
-  color:#1f2937;
-  cursor:pointer;
-  transition:0.3s;
+.header::after {
+    content: "";
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: rgba(144,192,62,.10);
+    right: -150px;
+    top: -250px;
 }
 
-.tab-btn.active{
-  background:linear-gradient(90deg,#2563eb,#22c55e);
-  color:white;
-  box-shadow:0 4px 14px rgba(34,197,94,0.35);
+.logo-wrap {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
 }
 
-/* ===== TOP CARD ===== */
-
-.top{
-  margin-bottom:10px;
+.logo {
+    width: min(420px, 78vw);
+    max-height: 125px;
+    object-fit: contain;
 }
 
-.top-card{
-  background:#e8f9ef;
-  border:2px solid #86efac;
-  border-radius:22px;
-  padding:10px;
-  position:relative;
+.campaign-date {
+    position: relative;
+    z-index: 2;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #b9e8ff;
+    text-transform: uppercase;
 }
 
-.crown{
-  position:absolute;
-  top:-10px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:20px;
-  animation:crownBounce 1.2s infinite;
-  filter:drop-shadow(0 0 6px gold);
+.live-pill {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 15px;
+    padding: 7px 15px;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(255,255,255,.08);
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
 }
 
-@keyframes crownBounce{
-  0%{transform:translateX(-50%) translateY(0);}
-  50%{transform:translateX(-50%) translateY(-4px);}
-  100%{transform:translateX(-50%) translateY(0);}
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #63e43d;
+    box-shadow: 0 0 10px #63e43d;
 }
 
-.top-grid{
-  display:grid;
-  grid-template-columns:40px 90px 1fr 50px;
-  gap:10px;
-  align-items:center;
+/* =========================================
+   MAIN
+========================================= */
+
+.container {
+    width: min(1200px, calc(100% - 28px));
+    margin: -22px auto 50px;
+    position: relative;
+    z-index: 5;
 }
 
-.top-zone{
-  font-size:20px;
-  font-weight:900;
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 12px 35px rgba(8,40,58,.10);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
 }
 
-.top-total{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  background:#22c55e;
-  color:white;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  font-size:18px;
-  font-weight:800;
+.summary-card {
+    padding: 16px;
+    border-radius: 13px;
+    background: var(--light);
+    border: 1px solid var(--border);
 }
 
-.member-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:3px;
-  gap:3px;
+.summary-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
 }
 
-.member-left{
-  display:flex;
-  align-items:center;
-  gap:8px;
+.summary-value {
+    font-size: 24px;
+    font-weight: 900;
+    margin-top: 5px;
+    color: var(--dark);
 }
 
-.member-photo{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  object-fit:cover;
+.summary-value.green {
+    color: var(--uf-green-dark);
 }
 
-.member-name{
-  font-size:14px;
-  font-weight:600;
+/* =========================================
+   CURRENT LEADER
+========================================= */
+
+.leader-card {
+    background:
+        linear-gradient(135deg, #071a28, #0a354d);
+    color: white;
+    border-radius: 22px;
+    padding: 28px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,40,65,.20);
 }
 
-.member-score{
-  font-size:16px;
-  font-weight:800;
-  color:#16a34a;
+.leader-card::after {
+    content: "";
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    right: -150px;
+    top: -170px;
+    background: rgba(144,192,62,.12);
 }
 
-/* ===== LIST ===== */
-
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
+.leader-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
-.row{
-  background:white;
-  border-radius:18px;
-  padding:9px 14px;
-
-  opacity:0;
-  transform:translateY(10px);
-  animation:fadeIn 0.4s ease forwards;
+.leader-photo {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba(255,255,255,.85);
+    background: #dceaf1;
+    flex-shrink: 0;
 }
 
-@keyframes fadeIn{
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+.leader-content {
+    flex: 1;
 }
 
-.row-grid{
-  display:grid;
-  grid-template-columns:40px 80px 1fr 50px;
-  gap:8px;
-  align-items:center;
+.leader-eyebrow {
+    color: #8fd7fa;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.rank{
-  font-size:16px;
-  color:#6b7280;
-  font-weight:600;
-  padding-top:6px;
+.leader-name {
+    font-size: clamp(25px, 4vw, 42px);
+    font-weight: 900;
+    margin: 5px 0;
 }
 
-.zone-name{
-  font-size:18px;
-  font-weight:800;
-  padding-top:2px;
+.leader-zone {
+    color: #a9bbc7;
+    font-size: 14px;
 }
 
-.zone-total{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:white;
-  font-size:18px;
-  font-weight:900;
+.leader-collection {
+    margin-top: 13px;
+    font-size: clamp(30px, 5vw, 50px);
+    font-weight: 900;
+    color: var(--uf-green);
 }
 
-.blue{background:#2563eb;}
-.green{background:#22c55e;}
-.light{background:#60a5fa;}
-.soft{background:#4ade80;}
-
-/* ===== RIVALRIES ===== */
-
-.section-title{
-  font-size:22px;
-  font-weight:800;
-  margin-bottom:14px;
+.leader-status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: rgba(144,192,62,.15);
+    color: #b8ee68;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .8px;
 }
 
-.rivalry-wrap{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
+/* =========================================
+   CONTROLS
+========================================= */
+
+.controls {
+    background: white;
+    padding: 18px;
+    border-radius: 17px;
+    box-shadow: 0 8px 25px rgba(8,40,58,.07);
+    margin-bottom: 18px;
 }
 
-.rivalry-card{
-  background:white;
-  border-radius:18px;
-  padding:6px 14px;
-  box-shadow:0 3px 14px rgba(0,0,0,0.08);
+.search {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    outline: none;
+    font-size: 15px;
+    margin-bottom: 13px;
 }
 
-.rivalry-label{
-  font-size:13px;
-  font-weight:800;
-  color:#ef4444;
+.search:focus {
+    border-color: var(--uf-blue);
+    box-shadow: 0 0 0 3px rgba(29,154,214,.10);
 }
 
-.rivalry-battle{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:4px;
+.zone-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.rival-player{
-  text-align:center;
-  width:100px;
+.zone-btn {
+    border: 1px solid var(--border);
+    background: white;
+    color: #40515d;
+    padding: 9px 13px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
 }
 
-.rival-player-name{
-  font-size:15px;
-  font-weight:800;
+.zone-btn:hover {
+    border-color: var(--uf-blue);
+    color: var(--uf-blue-dark);
 }
 
-.rival-player-score{
-  font-size:34px;
-  font-weight:900;
-  color:#16a34a;
-  margin-top:6px;
+.zone-btn.active {
+    background: var(--uf-blue);
+    color: white;
+    border-color: var(--uf-blue);
 }
 
-.vs{
-  font-size:24px;
-  font-weight:900;
-  color:#ef4444;
+/* =========================================
+   LEADERBOARD
+========================================= */
+
+.board {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(8,40,58,.08);
 }
 
-/* ===== FOOTER ===== */
-
-.footer{
-  text-align:center;
-  margin-top:18px;
-  font-size:14px;
+.board-header {
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-.footer span{
-  color:#22c55e;
+.board-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--dark);
+}
+
+.board-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.refresh-text {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-head,
+.player-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 130px 180px 160px;
+    align-items: center;
+    gap: 15px;
+}
+
+.table-head {
+    padding: 11px 20px;
+    background: #eef6fa;
+    color: #62737e;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.player-row {
+    padding: 13px 20px;
+    border-bottom: 1px solid #edf2f5;
+    min-height: 82px;
+}
+
+.player-row:hover {
+    background: #f8fbfd;
+}
+
+.rank {
+    font-size: 20px;
+    font-weight: 900;
+    color: #60727e;
+    text-align: center;
+}
+
+.rank.top1 {
+    color: #d69b10;
+}
+
+.rank.top2 {
+    color: #6b7c86;
+}
+
+.rank.top3 {
+    color: #a66c3d;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+}
+
+.player-photo {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: linear-gradient(135deg, #d8edf8, #e8f4d3);
+    flex-shrink: 0;
+    border: 2px solid #e2edf2;
+}
+
+.initial-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    color: white;
+    background: linear-gradient(135deg, var(--uf-blue), var(--uf-green));
+}
+
+.player-info {
+    min-width: 0;
+}
+
+.player-name {
+    font-size: 15px;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-zone {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+.collection {
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--dark);
+}
+
+.eligibility {
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.eligible {
+    color: var(--uf-green-dark);
+}
+
+.not-eligible {
+    color: #a36d3d;
+}
+
+.reward-badge {
+    display: inline-block;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.reward-top5 {
+    background: #e7f6d5;
+    color: #4e8a19;
+}
+
+.reward-top15 {
+    background: #edf6fc;
+    color: #1675a8;
+}
+
+.reward-outside {
+    background: #f1f3f5;
+    color: #7a858c;
+}
+
+.reward-not {
+    background: #f7f0ea;
+    color: #96623a;
+}
+
+/* =========================================
+   LOADING / ERROR
+========================================= */
+
+.message {
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #dce9ef;
+    border-top-color: var(--uf-blue);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+    text-align: center;
+    padding: 25px 10px 35px;
+    color: #81909a;
+    font-size: 11px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .leader-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .leader-photo {
+        width: 105px;
+        height: 105px;
+    }
+
+    .table-head {
+        display: none;
+    }
+
+    .player-row {
+        grid-template-columns: 42px 1fr auto;
+        gap: 10px;
+        padding: 14px 13px;
+    }
+
+    .player-row > .mobile-zone {
+        display: block;
+    }
+
+    .desktop-zone {
+        display: none;
+    }
+
+    .row-reward {
+        grid-column: 2 / 4;
+        margin-top: -4px;
+    }
+
+    .collection {
+        text-align: right;
+        font-size: 16px;
+    }
+
+    .rank {
+        font-size: 17px;
+    }
+
+    .player-photo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .board-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .refresh-text {
+        text-align: left;
+    }
+
+}
+
+@media (min-width: 801px) {
+    .mobile-zone {
+        display: none;
+    }
 }
 
 </style>
@@ -302,364 +613,1042 @@ body{
 
 <body>
 
-<div class="container">
+<header class="header">
 
-<div class="title">Maa ki khushi</div>
+    <div class="logo-wrap">
+        <img
+            class="logo"
+            src="https://drive.google.com/thumbnail?id=1placeholder"
+            alt="Market Marathon"
+            onerror="this.style.display='none'"
+        >
+    </div>
 
-<div class="subtitle">
-  Mother’s Day Special
-</div>
+    <div class="campaign-date">
+        13 — 22 AUGUST 2026
+    </div>
 
-<!-- ===== TABS ===== -->
+    <div class="live-pill">
+        <span class="live-dot"></span>
+        LIVE LEADERBOARD
+    </div>
 
-<div class="tabs">
+</header>
 
-  <button class="tab-btn active"
-    onclick="showTab('leaderboard',this)">
-    Leaderboard
-  </button>
 
-  <button class="tab-btn"
-    onclick="showTab('rivalry',this)">
-    Rivalries
-  </button>
+<main class="container">
 
-</div>
+    <section class="summary">
 
-<!-- ===== LEADERBOARD ===== -->
+        <div class="summary-card">
+            <div class="summary-label">
+                Participants
+            </div>
 
-<div id="leaderboard-tab">
+            <div
+                class="summary-value"
+                id="participantCount"
+            >
+                —
+            </div>
+        </div>
 
-  <div class="top" id="top"></div>
 
-  <div class="list" id="list"></div>
+        <div class="summary-card">
+            <div class="summary-label">
+                ₹2L+ Eligible
+            </div>
 
-</div>
+            <div
+                class="summary-value green"
+                id="eligibleCount"
+            >
+                —
+            </div>
+        </div>
 
-<!-- ===== RIVALRIES ===== -->
 
-<div id="rivalry-tab" style="display:none;">
+        <div class="summary-card">
+            <div class="summary-label">
+                Current Highest Collection
+            </div>
 
-  <div class="section-title">
-    🔥 Close Zone Battles
-  </div>
+            <div
+                class="summary-value"
+                id="highestCollection"
+            >
+                —
+            </div>
+        </div>
 
-  <div class="rivalry-wrap" id="rivalries"></div>
+    </section>
 
-</div>
 
-<div class="footer">
-  Keep booking. <span>Keep smiling.</span>
-</div>
+    <section
+        class="leader-card"
+        id="leaderCard"
+    >
 
-</div>
+        <div class="leader-inner">
+
+            <div
+                id="leaderPhotoContainer"
+            ></div>
+
+            <div class="leader-content">
+
+                <div class="leader-eyebrow">
+                    🏆 CURRENT LEADER
+                </div>
+
+                <div
+                    class="leader-name"
+                    id="leaderName"
+                >
+                    Loading...
+                </div>
+
+                <div
+                    class="leader-zone"
+                    id="leaderZone"
+                >
+                </div>
+
+                <div
+                    class="leader-collection"
+                    id="leaderCollection"
+                >
+                    —
+                </div>
+
+                <div
+                    class="leader-status"
+                    id="leaderStatus"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="controls">
+
+        <input
+            type="text"
+            class="search"
+            id="search"
+            placeholder="Search salesperson..."
+        >
+
+        <div
+            class="zone-buttons"
+            id="zoneButtons"
+        >
+        </div>
+
+    </section>
+
+
+    <section class="board">
+
+        <div class="board-header">
+
+            <div>
+
+                <div class="board-title">
+                    LIVE LEADERBOARD
+                </div>
+
+                <div class="board-subtitle">
+                    Highest collection leads the race
+                </div>
+
+            </div>
+
+            <div
+                class="refresh-text"
+                id="refreshText"
+            >
+                Updating...
+            </div>
+
+        </div>
+
+
+        <div class="table-head">
+
+            <div>
+                Rank
+            </div>
+
+            <div>
+                Salesperson
+            </div>
+
+            <div>
+                Zone
+            </div>
+
+            <div>
+                Collection
+            </div>
+
+            <div>
+                Current Position
+            </div>
+
+        </div>
+
+
+        <div
+            id="leaderboard"
+        >
+            <div class="message">
+
+                <div class="spinner"></div>
+
+                Loading leaderboard...
+
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    Market Marathon 2026 • Ultrafresh
+
+</footer>
+
 
 <script>
 
-const API_URL = "https://script.google.com/macros/s/AKfycby9mpB6fR2caqBX-_48T-EfM51ZiJZWtcl0bghG2NcSbRPhkNDe0ofKTlhtkx1oFTS5/exec";
+/* ==================================================
+   MARKET MARATHON API
+================================================== */
 
-/* ===== TAB SWITCH ===== */
+const API_URL =
+    "https://script.google.com/macros/s/AKfycbwLVwoCtJqv_v7R3FsRAKIoKg8uUAXts-25bXSgq9x7Z2eBGgAzdmsfX39AzIhOe8hi/exec";
 
-function showTab(tab,btn){
 
-  document.getElementById("leaderboard-tab").style.display = "none";
-  document.getElementById("rivalry-tab").style.display = "none";
+let allData = [];
 
-  document.getElementById(tab + "-tab").style.display = "block";
+let selectedZone = "ALL";
 
-  document.querySelectorAll(".tab-btn").forEach(b=>{
-    b.classList.remove("active");
-  });
 
-  btn.classList.add("active");
+/* ==================================================
+   FORMAT CURRENCY
+================================================== */
+
+function formatCurrency(value) {
+
+    return new Intl.NumberFormat(
+        "en-IN",
+        {
+            style: "currency",
+            currency: "INR",
+            maximumFractionDigits: 0
+        }
+    ).format(
+        Number(value) || 0
+    );
 
 }
 
-/* ===== LOAD DATA ===== */
 
-async function loadData(){
+/* ==================================================
+   FORMAT LAKHS
+================================================== */
 
-  const res = await fetch(API_URL + "?t=" + Date.now());
+function formatLakhs(value) {
 
-  const data = await res.json();
+    value =
+        Number(value) || 0;
 
-  const topDiv = document.getElementById("top");
-  const listDiv = document.getElementById("list");
-  const rivalryDiv = document.getElementById("rivalries");
+    if (value >= 100000) {
 
-  topDiv.innerHTML = "";
-  listDiv.innerHTML = "";
-  rivalryDiv.innerHTML = "";
-
-  /* ===== BUILD ZONES ===== */
-
-  const zoneTotals = {};
-
-  data.forEach(p=>{
-
-    const zone = p.zone || "Unknown";
-
-    if(!zoneTotals[zone]){
-
-      zoneTotals[zone] = {
-        total:0,
-        members:[]
-      };
+        return (
+            "₹" +
+            (value / 100000)
+                .toFixed(
+                    value >= 1000000
+                        ? 2
+                        : 2
+                ) +
+            " L"
+        );
 
     }
 
-    zoneTotals[zone].total += Number(p.score || 0);
-
-    zoneTotals[zone].members.push({
-      name:p.name,
-      photo:p.photo,
-      score:p.score
-    });
-
-  });
-
-  /* ===== SORT ===== */
-
-  const zones = Object.entries(zoneTotals)
-    .sort((a,b)=>b[1].total - a[1].total);
-
-  /* ===== TOP ZONE ===== */
-
-  const topScore = zones[0][1].total;
-
-  const topZones = zones.filter(z => z[1].total === topScore);
-
-  topZones.forEach(([zone,data])=>{
-
-    let membersHTML = "";
-
-    data.members.forEach(member=>{
-
-      membersHTML += `
-
-        <div class="member-row">
-
-          <div class="member-left">
-
-            <img class="member-photo"
-              src="${member.photo}">
-
-            <div class="member-name">
-              ${member.name}
-            </div>
-
-          </div>
-
-${data.members.length > 1 ? `
-  <div class="member-score">
-    ${member.score}
-  </div>
-` : ``}
-
-        </div>
-
-      `;
-
-    });
-
-    const div = document.createElement("div");
-
-    div.className = "top-card";
-
-    div.innerHTML = `
-
-      <div class="top-grid">
-
-        <div class="rank">
-          1
-        </div>
-
-<div class="top-zone">
-
-  <div style="
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    line-height:1;
-  ">
-
-    <div style="
-      font-size:18px;
-      margin-bottom:6px;
-      filter:drop-shadow(0 0 6px gold);
-      animation:crownBounce 1.2s infinite;
-    ">
-      👑
-    </div>
-
-    <div>
-      ${zone}
-    </div>
-
-  </div>
-
-</div>
-
-        <div>
-          ${membersHTML}
-        </div>
-
-        <div class="top-total">
-          ${data.total}
-        </div>
-
-      </div>
-
-    `;
-
-    topDiv.appendChild(div);
-
-  });
-
-  /* ===== REST ===== */
-
-  const rest = zones.filter(z => z[1].total !== topScore);
-
-  let rank = topZones.length + 1;
-
-  const colors = ["blue","green","light","soft"];
-
-  rest.forEach(([zone,data],i)=>{
-
-    if(i > 0 && data.total !== rest[i-1][1].total){
-      rank++;
-    }
-
-    let membersHTML = "";
-
-    data.members.forEach(member=>{
-
-      membersHTML += `
-
-        <div class="member-row">
-
-          <div class="member-left">
-
-            <img class="member-photo"
-              src="${member.photo}">
-
-            <div class="member-name">
-              ${member.name}
-            </div>
-
-          </div>
-
-${data.members.length > 1 ? `
-  <div class="member-score">
-    ${member.score}
-  </div>
-` : ``}
-
-        </div>
-
-      `;
-
-    });
-
-    const color = colors[i % colors.length];
-
-    const row = document.createElement("div");
-
-    row.className = "row";
-
-    row.style.animationDelay = (i * 0.05) + "s";
-
-    row.innerHTML = `
-
-      <div class="row-grid">
-
-        <div class="rank">
-          ${rank}
-        </div>
-
-        <div class="zone-name">
-          ${zone}
-        </div>
-
-        <div>
-          ${membersHTML}
-        </div>
-
-        <div class="zone-total ${color}">
-          ${data.total}
-        </div>
-
-      </div>
-
-    `;
-
-    listDiv.appendChild(row);
-
-  });
-
-  /* ===== RIVALRIES ===== */
-
-  for(let i=0;i<zones.length-1;i++){
-
-    const current = zones[i];
-    const next = zones[i+1];
-
-    const diff = current[1].total - next[1].total;
-
-    if(diff <= 1){
-
-      const card = document.createElement("div");
-
-      card.className = "rivalry-card";
-
-      card.innerHTML = `
-
-        <div class="rivalry-battle">
-
-          <div class="rival-player">
-
-            <div class="rival-player-name">
-              ${current[0]}
-            </div>
-
-            <div class="rival-player-score">
-              ${current[1].total}
-            </div>
-
-          </div>
-
-          <div class="vs">
-            ⚔️
-          </div>
-
-          <div class="rival-player">
-
-            <div class="rival-player-name">
-              ${next[0]}
-            </div>
-
-            <div class="rival-player-score">
-              ${next[1].total}
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-      rivalryDiv.appendChild(card);
-
-    }
-
-  }
+    return formatCurrency(value);
 
 }
 
-setInterval(loadData,4000);
+
+/* ==================================================
+   INITIALS
+================================================== */
+
+function getInitials(name) {
+
+    const words =
+        String(name)
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+    if (!words.length) {
+        return "?";
+    }
+
+    if (words.length === 1) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+/* ==================================================
+   PHOTO HTML
+================================================== */
+
+function getPhotoHTML(
+    person,
+    large = false
+) {
+
+    const sizeClass =
+        large
+            ? "leader-photo"
+            : "player-photo";
+
+
+    if (
+        person.photo &&
+        person.photoStatus !== "◻️ No Photo"
+    ) {
+
+        return `
+            <img
+                class="${sizeClass}"
+                src="${person.photo}"
+                alt="${escapeHTML(person.name)}"
+                loading="lazy"
+                onerror="this.outerHTML =
+                    '<div class=&quot;${sizeClass} initial-avatar&quot;>
+                    ${getInitials(person.name)}
+                    </div>'"
+            >
+        `;
+
+    }
+
+
+    return `
+        <div
+            class="${sizeClass} initial-avatar"
+        >
+            ${getInitials(person.name)}
+        </div>
+    `;
+
+}
+
+
+/* ==================================================
+   ESCAPE HTML
+================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==================================================
+   REWARD BADGE
+================================================== */
+
+function getRewardBadge(person) {
+
+    if (!person.eligible) {
+
+        return `
+            <span class="reward-badge reward-not">
+                🔒 Not Eligible
+            </span>
+        `;
+
+    }
+
+
+    if (
+        person.rewardStatus ===
+        "CURRENTLY TOP 5"
+    ) {
+
+        return `
+            <span class="reward-badge reward-top5">
+                🏆 Currently Top 5
+            </span>
+        `;
+
+    }
+
+
+    if (
+        person.rewardStatus ===
+        "CURRENTLY TOP 15"
+    ) {
+
+        return `
+            <span class="reward-badge reward-top15">
+                🎯 Currently Top 15
+            </span>
+        `;
+
+    }
+
+
+    return `
+        <span class="reward-badge reward-outside">
+            Eligible • Outside Top 15
+        </span>
+    `;
+
+}
+
+
+/* ==================================================
+   LOAD DATA
+================================================== */
+
+async function loadData() {
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "?t=" +
+                Date.now()
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "API request failed"
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !Array.isArray(data)
+        ) {
+
+            throw new Error(
+                data.error ||
+                "Invalid API response"
+            );
+
+        }
+
+
+        allData =
+            data.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    Number(b.collection || 0) -
+                    Number(a.collection || 0)
+            );
+
+
+        renderSummary();
+
+        renderLeader();
+
+        buildZoneButtons();
+
+        renderLeaderboard();
+
+        document.getElementById(
+            "refreshText"
+        ).textContent =
+            "Updated " +
+            new Date()
+                .toLocaleTimeString(
+                    "en-IN",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
+                    }
+                );
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        document.getElementById(
+            "leaderboard"
+        ).innerHTML = `
+
+            <div class="message">
+
+                Unable to load leaderboard.
+
+                <br><br>
+
+                <small>
+                    Please refresh the page.
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ==================================================
+   SUMMARY
+================================================== */
+
+function renderSummary() {
+
+    const total =
+        allData.length;
+
+
+    const eligible =
+        allData.filter(
+            person =>
+                person.eligible
+        ).length;
+
+
+    const highest =
+        allData.length
+            ? Number(
+                allData[0].collection
+              ) || 0
+            : 0;
+
+
+    document.getElementById(
+        "participantCount"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "eligibleCount"
+    ).textContent =
+        eligible;
+
+
+    document.getElementById(
+        "highestCollection"
+    ).textContent =
+        formatLakhs(
+            highest
+        );
+
+}
+
+
+/* ==================================================
+   CURRENT LEADER
+================================================== */
+
+function renderLeader() {
+
+    const leader =
+        allData[0];
+
+
+    if (!leader) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "leaderPhotoContainer"
+    ).innerHTML =
+        getPhotoHTML(
+            leader,
+            true
+        );
+
+
+    document.getElementById(
+        "leaderName"
+    ).textContent =
+        "#" +
+        leader.rank +
+        " • " +
+        leader.name;
+
+
+    document.getElementById(
+        "leaderZone"
+    ).textContent =
+        leader.zone ||
+        "";
+
+
+    document.getElementById(
+        "leaderCollection"
+    ).textContent =
+        formatLakhs(
+            leader.collection
+        );
+
+
+    document.getElementById(
+        "leaderStatus"
+    ).textContent =
+        leader.eligible
+            ? "🟢 ₹2L+ ELIGIBLE"
+            : "🔒 ₹2L REQUIRED";
+
+}
+
+
+/* ==================================================
+   ZONE FILTERS
+================================================== */
+
+function buildZoneButtons() {
+
+    const container =
+        document.getElementById(
+            "zoneButtons"
+        );
+
+
+    const zones = [
+        ...new Set(
+            allData
+                .map(
+                    person =>
+                        person.zone
+                )
+                .filter(Boolean)
+        )
+    ].sort();
+
+
+    container.innerHTML = "";
+
+
+    const allButton =
+        document.createElement(
+            "button"
+        );
+
+
+    allButton.className =
+        "zone-btn " +
+        (
+            selectedZone === "ALL"
+                ? "active"
+                : ""
+        );
+
+
+    allButton.textContent =
+        "ALL INDIA";
+
+
+    allButton.onclick =
+        function() {
+
+            selectedZone =
+                "ALL";
+
+            buildZoneButtons();
+
+            renderLeaderboard();
+
+        };
+
+
+    container.appendChild(
+        allButton
+    );
+
+
+    zones.forEach(
+        zone => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "zone-btn " +
+                (
+                    selectedZone === zone
+                        ? "active"
+                        : ""
+                );
+
+
+            button.textContent =
+                zone;
+
+
+            button.onclick =
+                function() {
+
+                    selectedZone =
+                        zone;
+
+                    buildZoneButtons();
+
+                    renderLeaderboard();
+
+                };
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   RENDER LEADERBOARD
+================================================== */
+
+function renderLeaderboard() {
+
+    const container =
+        document.getElementById(
+            "leaderboard"
+        );
+
+
+    const search =
+        document.getElementById(
+            "search"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    let filtered =
+        allData.filter(
+            person => {
+
+                const zoneMatch =
+                    selectedZone ===
+                    "ALL" ||
+                    person.zone ===
+                    selectedZone;
+
+
+                const searchMatch =
+                    !search ||
+                    String(
+                        person.name
+                    )
+                    .toLowerCase()
+                    .includes(
+                        search
+                    );
+
+
+                return (
+                    zoneMatch &&
+                    searchMatch
+                );
+
+            }
+        );
+
+
+    if (!filtered.length) {
+
+        container.innerHTML = `
+
+            <div class="message">
+                No salesperson found.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered
+            .map(
+                person =>
+                    createPlayerRow(
+                        person
+                    )
+            )
+            .join("");
+
+}
+
+
+/* ==================================================
+   PLAYER ROW
+================================================== */
+
+function createPlayerRow(
+    person
+) {
+
+    let rankClass = "";
+
+    if (
+        Number(person.rank) === 1
+    ) {
+
+        rankClass =
+            "top1";
+
+    } else if (
+        Number(person.rank) === 2
+    ) {
+
+        rankClass =
+            "top2";
+
+    } else if (
+        Number(person.rank) === 3
+    ) {
+
+        rankClass =
+            "top3";
+
+    }
+
+
+    const collection =
+        Number(
+            person.collection
+        ) || 0;
+
+
+    const amountNeeded =
+        Number(
+            person.amountToEligibility
+        ) || 0;
+
+
+    let eligibilityText = "";
+
+
+    if (
+        person.eligible
+    ) {
+
+        eligibilityText =
+            `<span class="eligibility eligible">
+                ✓ ₹2L+ Eligible
+             </span>`;
+
+    } else {
+
+        eligibilityText =
+            `<span class="eligibility not-eligible">
+                ₹${formatNumber(
+                    amountNeeded
+                )} more to unlock
+             </span>`;
+
+    }
+
+
+    return `
+
+        <div class="player-row">
+
+            <div
+                class="rank ${rankClass}"
+            >
+                ${person.rank}
+            </div>
+
+
+            <div class="player">
+
+                ${getPhotoHTML(
+                    person
+                )}
+
+                <div class="player-info">
+
+                    <div class="player-name">
+                        ${escapeHTML(
+                            person.name
+                        )}
+                    </div>
+
+                    <div class="player-zone">
+                        ${escapeHTML(
+                            person.zone ||
+                            ""
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="desktop-zone">
+                ${escapeHTML(
+                    person.zone ||
+                    "-"
+                )}
+            </div>
+
+
+            <div>
+
+                <div class="collection">
+                    ${formatLakhs(
+                        collection
+                    )}
+                </div>
+
+                <div class="mobile-zone">
+                    ${eligibilityText}
+                </div>
+
+            </div>
+
+
+            <div class="row-reward">
+
+                ${getRewardBadge(
+                    person
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==================================================
+   NUMBER FORMAT
+================================================== */
+
+function formatNumber(
+    value
+) {
+
+    return new Intl.NumberFormat(
+        "en-IN"
+    ).format(
+        Number(value) || 0
+    );
+
+}
+
+
+/* ==================================================
+   SEARCH
+================================================== */
+
+document.getElementById(
+    "search"
+).addEventListener(
+    "input",
+    function() {
+
+        renderLeaderboard();
+
+    }
+);
+
+
+/* ==================================================
+   INITIAL LOAD
+================================================== */
 
 loadData();
+
+
+/* ==================================================
+   AUTO REFRESH
+================================================== */
+
+setInterval(
+    loadData,
+    15000
+);
 
 </script>
 
